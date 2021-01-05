@@ -3,17 +3,11 @@ import {createSlice, configureStore} from '@reduxjs/toolkit'
 const counterSlice = createSlice({
     name: 'counter',
     initialState: {
-        isLoggedIn: false
+        isLoggedIn: false,
+        switch: false,
+        payload: []
     },
     reducers: {
-        incrementStart: state => {
-            console.log('incrementStart', state)
-            return state;
-        },
-        incrementSuccess: state => {
-            console.log('incrementSuccess', state)
-            return state+1;
-        },
         loginStart: state => {
             console.log('loginStart')
             return state;
@@ -25,26 +19,30 @@ const counterSlice = createSlice({
                 isLoggedIn: true
             }
         },
-        incrementError: state => state,
+        switchStart: state => {
+            return {
+                ...state,
+                switch: false,
+                error: null
+            }
+        },
+        switchSuccess: state => {
+            return {
+                ...state,
+                switch: true,
+                error: null
+            }    
+        },
+        toggleSwitch: state => {
+            console.log('toggleSwitch called from store')
+            return {
+                ...state,
+                switch: !state.switch,
+                payload: [...state.payload]
+            }
+        }
     }
 })
-
-// Thunk Action
-export const testFetch = () => async dispatch => {
-    try {
-        setTimeout(()=>{
-            dispatch(incrementStart())
-        }, 2000);
-
-        setTimeout(()=>{
-            dispatch(incrementSuccess())
-        }, 2000);
-
-
-    } catch (error) {
-        console.log(error)
-    }
-}
 
 export const userLogin__thunk = () => async dispatch => {
     try {
@@ -55,8 +53,18 @@ export const userLogin__thunk = () => async dispatch => {
         setTimeout(()=>{
             dispatch(loginSuccess())
         }, 2000);
+    } catch (error) {
+        console.log(error)
+    }
+}
 
+export const switch__thunk = () => async dispatch => {
+    try {
+        dispatch(switchStart())
 
+        setTimeout(()=>{
+            dispatch(switchSuccess())
+        }, 2000);
     } catch (error) {
         console.log(error)
     }
@@ -66,7 +74,10 @@ export const {
     incrementStart,
     incrementSuccess,
     loginStart,
-    loginSuccess
+    loginSuccess,
+    switchStart,
+    switchSuccess,
+    toggleSwitch
   } = counterSlice.actions
 
 export const store = configureStore({

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import Counter from './Counter';
+import Counter from './MainLayot';
 
 describe('<Counter />', () => {
   test('it should mount', () => {

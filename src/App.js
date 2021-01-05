@@ -12,23 +12,41 @@ import {
 } from "react-router-dom";
 
 // Components
-import Counter from './components/Counter/Counter';
+import MainLayout from './components/MainLayout/MainLayout';
 import Login from './components/Login/Login';
 
+// Selectors
+import {appSelector} from './selectors'
+
 function App(props) {
+  // Component did mount
   React.useEffect(()=>{
-    console.log('props.isLoggedIn')
+    console.log('App Mounted')
+  }, [])
+
+  // component did update on specific prop
+  React.useEffect(()=>{
+    console.log('props.isLoggedIn changed', props.isLoggedIn)
   }, [props.isLoggedIn])
 
-  return (
+  // component rerendered
+  React.useEffect(()=>{
+    console.log('!!App rerenderd!!!')
+  })
 
+  /**
+   ** JSX
+   */
+  return (
         <div className="App">
           <Router>
-          {!props.isLoggedIn &&
-            <Redirect to={'/login'} />}
+          { !props.isLoggedIn 
+            &&
+            <Redirect to={'/login'} />
+          }
             <Switch>
               <Route exact path="/">
-                <Counter />
+                <MainLayout />
               </Route>
               <Route path="/login">
                 <Login />
@@ -43,10 +61,15 @@ function App(props) {
 * properties of this object are gonna be the props of our components
 */
 function mapStateToProps(state) {
-  console.log(state)
-  return {
-    isLoggedIn: state.isLoggedIn
-  }
+  console.log('App:state',state)
+  //with memoization
+  return appSelector(state);
+
+  // without memoization
+  // return {
+  //   isLoggedIn: state.isLoggedIn,
+  //   payload: state.payload
+  // }
 }
 
 /*

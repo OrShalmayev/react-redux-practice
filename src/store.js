@@ -5,7 +5,8 @@ const counterSlice = createSlice({
     initialState: {
         isLoggedIn: false,
         switch: false,
-        payload: []
+        payload: ['test'],
+        counter: 0
     },
     reducers: {
         loginStart: state => {
@@ -30,6 +31,7 @@ const counterSlice = createSlice({
             return {
                 ...state,
                 switch: true,
+                payload: ['test'],
                 error: null
             }    
         },
@@ -38,7 +40,13 @@ const counterSlice = createSlice({
             return {
                 ...state,
                 switch: !state.switch,
-                payload: [...state.payload]
+                payload: state.payload.filter(v=>v!==null)
+            }
+        },
+        increment: state => {
+            return {
+                ...state,
+                counter: state.counter+1
             }
         }
     }
@@ -77,7 +85,8 @@ export const {
     loginSuccess,
     switchStart,
     switchSuccess,
-    toggleSwitch
+    toggleSwitch,
+    increment
   } = counterSlice.actions
 
 export const store = configureStore({

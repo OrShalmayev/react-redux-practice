@@ -2,6 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {toggleSwitch} from '../../store'
 
+// componetns 
+import Counter from '../Counter/Counter';
+
 const MainLayout = (props) => {
   React.useEffect(()=>{
     console.log('MainLayout Mounted :)')
@@ -20,6 +23,7 @@ const MainLayout = (props) => {
     <div className={'MainLayout'} data-testid="MainLayout">
       MainLayout Component
       <button onClick={()=>handleBtnClick()}>Update switch state</button>
+      <Counter />
     </div>
   )
 }

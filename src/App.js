@@ -16,7 +16,7 @@ import MainLayout from './components/MainLayout/MainLayout';
 import Login from './components/Login/Login';
 
 // Selectors
-import {appSelector} from './selectors'
+import {appSelector__selector} from './selectors'
 
 function App(props) {
   // Component did mount
@@ -63,13 +63,12 @@ function App(props) {
 function mapStateToProps(state) {
   console.log('App:state',state)
   //with memoization
-  return appSelector(state);
-
-  // without memoization
-  // return {
-  //   isLoggedIn: state.isLoggedIn,
-  //   payload: state.payload
-  // }
+  return {
+    isLoggedIn: state.isLoggedIn,
+    payload: state.payload,
+  }
+  console.log(appSelector__selector(state));
+  // return appSelector__selector(state);
 }
 
 /*
